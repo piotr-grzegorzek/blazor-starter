@@ -32,3 +32,7 @@ playwright/selenium
 moq
 
 ### Helpful links
+
+- [https://developer.mescius.com/blogs/building-blazor-desktop-apps-with-electron-dot-net](https://developer.mescius.com/blogs/building-blazor-desktop-apps-with-electron-dot-net)
+
+- [https://learn.microsoft.com/en-us/aspnet/core/blazor/tutorials/movie-database-app/part-1?view=aspnetcore-9.0&pivots=vs](https://learn.microsoft.com/en-us/aspnet/core/blazor/tutorials/movie-database-app/part-1?view=aspnetcore-9.0&pivots=vs)
