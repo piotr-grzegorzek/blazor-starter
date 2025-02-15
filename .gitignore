@@ -200,9 +200,6 @@ __pycache__/
 
 # Windows thumbnail cache files
 Thumbs.db
-Solution/InteractiveServer/Migrations/20241029101934_pg_card-description.cs
-Solution/InteractiveServer/Migrations/20241029101934_pg_card-description.Designer.cs
-Solution/InteractiveServer/Migrations/ApplicationDbContextModelSnapshot.cs
 
 # .env file
 .env

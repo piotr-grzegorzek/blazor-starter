@@ -1,0 +1,33 @@
+﻿@page "/appentities/create"
+@using Microsoft.EntityFrameworkCore
+@using InteractiveServer.Data.Models
+@inject IDbContextFactory<InteractiveServer.Data.AppDbContext> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Create</PageTitle>
+
+<h1>Create</h1>
+
+<h2>AppEntity</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+    </div>
+</div>
+
+<div>
+    <a href="/appentities">Back to List</a>
+</div>
+
+@code {
+
+    // To protect from overposting attacks, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
+    protected override void OnInitialized()
+    {
+        using var context = DbFactory.CreateDbContext();
+        AppEntity AppEntity = new AppEntity();
+        context.AppEntities.Add(AppEntity);
+        context.SaveChanges();
+        NavigationManager.NavigateTo("/appentities");
+    }
+}

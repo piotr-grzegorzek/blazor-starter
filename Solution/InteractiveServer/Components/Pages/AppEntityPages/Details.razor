@@ -1,0 +1,44 @@
+﻿@page "/appentities/details"
+@using Microsoft.EntityFrameworkCore
+@using InteractiveServer.Data.Models
+@inject IDbContextFactory<InteractiveServer.Data.AppDbContext> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Details</PageTitle>
+
+<h1>Details</h1>
+
+<div>
+    <h2>AppEntity</h2>
+    <hr />
+    @if (appentity is null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else {
+        <dl class="row">
+        </dl>
+        <div>
+            <a href="@($"/appentities/edit?id={appentity.Id}")">Edit</a> |
+            <a href="@($"/appentities")">Back to List</a>
+        </div>
+    }
+</div>
+
+@code {
+    private AppEntity? appentity;
+
+    [SupplyParameterFromQuery]
+    private int Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        using var context = DbFactory.CreateDbContext();
+        appentity = await context.AppEntities.FirstOrDefaultAsync(m => m.Id == Id);
+
+        if (appentity is null)
+        {
+            NavigationManager.NavigateTo("notfound");
+        }
+    }
+}

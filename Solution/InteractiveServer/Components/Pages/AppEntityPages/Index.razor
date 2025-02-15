@@ -1,0 +1,35 @@
+﻿@page "/appentities"
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Components.QuickGrid
+@using InteractiveServer.Data.Models
+@using InteractiveServer.Data
+@implements IAsyncDisposable
+@inject IDbContextFactory<InteractiveServer.Data.AppDbContext> DbFactory
+
+<PageTitle>Index</PageTitle>
+
+<h1>Index</h1>
+
+<p>
+    <a href="appentities/create">Create New</a>
+</p>
+
+<QuickGrid Class="table" Items="context.AppEntities">
+
+    <TemplateColumn Context="appentity">
+        <a href="@($"appentities/edit?id={appentity.Id}")">Edit</a> |
+        <a href="@($"appentities/details?id={appentity.Id}")">Details</a> |
+        <a href="@($"appentities/delete?id={appentity.Id}")">Delete</a>
+    </TemplateColumn>
+</QuickGrid>
+
+@code {
+    private AppDbContext context = default!;
+
+    protected override void OnInitialized()
+    {
+        context = DbFactory.CreateDbContext();
+    }
+
+    public async ValueTask DisposeAsync() => await context.DisposeAsync();
+}

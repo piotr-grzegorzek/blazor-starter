@@ -1,0 +1,84 @@
+﻿@page "/appentities/edit"
+@using Microsoft.EntityFrameworkCore
+@using InteractiveServer.Data.Models
+@inject IDbContextFactory<InteractiveServer.Data.AppDbContext> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Edit</PageTitle>
+
+<h1>Edit</h1>
+
+<h2>AppEntity</h2>
+<hr />
+@if (AppEntity is null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="row">
+        <div class="col-md-4">
+            <EditForm method="post" Model="AppEntity" OnValidSubmit="UpdateAppEntity" FormName="edit" Enhance>
+                <DataAnnotationsValidator />
+                <ValidationSummary role="alert"/>
+                <input type="hidden" name="AppEntity.Id" value="@AppEntity.Id" />
+                <button type="submit" class="btn btn-primary">Save</button>
+            </EditForm>
+        </div>
+    </div>
+}
+
+<div>
+    <a href="/appentities">Back to List</a>
+</div>
+
+@code {
+    [SupplyParameterFromQuery]
+    private int Id { get; set; }
+
+    [SupplyParameterFromForm]
+    private AppEntity? AppEntity { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        using var context = DbFactory.CreateDbContext();
+        AppEntity ??= await context.AppEntities.FirstOrDefaultAsync(m => m.Id == Id);
+
+        if (AppEntity is null)
+        {
+            NavigationManager.NavigateTo("notfound");
+        }
+    }
+
+    // To protect from overposting attacks, enable the specific properties you want to bind to.
+    // For more information, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
+    private async Task UpdateAppEntity()
+    {
+        using var context = DbFactory.CreateDbContext();
+        context.Attach(AppEntity!).State = EntityState.Modified;
+
+        try
+        {
+            await context.SaveChangesAsync();
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+            if (!AppEntityExists(AppEntity!.Id))
+            {
+                NavigationManager.NavigateTo("notfound");
+            }
+            else
+            {
+                throw;
+            }
+        }
+
+        NavigationManager.NavigateTo("/appentities");
+    }
+
+    private bool AppEntityExists(int id)
+    {
+        using var context = DbFactory.CreateDbContext();
+        return context.AppEntities.Any(e => e.Id == id);
+    }
+}
