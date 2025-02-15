@@ -3,7 +3,6 @@
 ## Tooling
 
 - Electron.NET
-- MudBlazor
 - CSharpier (uses editorconfig line limit)
 - StyleCop analyzers (member ordering)
 - EF Core
@@ -24,6 +23,8 @@
 tools -> options -> csharpier -> csharpier - solution set true
 
 ### To do
+
+MudBlazor
 
 FluentValidation
 
