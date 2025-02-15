@@ -1,20 +1,36 @@
-﻿using InteractiveServer.Components;
+﻿using ElectronNET.API;
 using InteractiveServer.Data;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddElectron();
+builder.WebHost.UseElectron(args);
+if (builder.Environment.IsDevelopment())
+{
+    builder.WebHost.UseEnvironment("Development");
+}
+if (HybridSupport.IsElectronActive)
+{
+    // Open the Electron-Window here
+    await Task.Run(async () =>
+    {
+        BrowserWindow window = await Electron.WindowManager.CreateWindowAsync();
+        window.OnClosed += () => Electron.App.Quit();
+    });
+}
+
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
+// Set up db context
 string? connectionString =
     builder.Configuration.GetConnectionString("DefaultConnection")
     ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContextFactory<AppDbContext>(options => options.UseFirebird(connectionString));
 
 builder.Services.AddQuickGridEntityFrameworkAdapter();
-
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 var app = builder.Build();
@@ -35,11 +51,10 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-
 app.UseAntiforgery();
 
 app.MapStaticAssets();
-app.MapRazorComponents<App>()
+app.MapRazorComponents<InteractiveServer.Components.App>()
     .AddInteractiveServerRenderMode();
 
 app.Run();
