@@ -18,23 +18,27 @@
 
 ### CSharpier setup
 
-[https://marketplace.visualstudio.com/items?itemName=csharpier.CSharpier](install the extension)
+(https://marketplace.visualstudio.com/items?itemName=csharpier.CSharpier)[install the extension]
 
 tools -> options -> csharpier -> csharpier - solution set true
 
 ### To do
 
-MudBlazor
+MudBlazor (component library)
 
-FluentValidation
+Blazored.FluentValidation
 
-Serilog
+xunit - unit testing
 
-xunit
+---
 
-playwright/selenium
+bunit - component testing
 
-moq
+playwright - e2e testing
+
+moq - mocking
+
+Serilog - log provider
 
 ### Helpful links
 
