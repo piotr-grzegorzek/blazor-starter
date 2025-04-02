@@ -18,7 +18,7 @@
 
 ### CSharpier setup
 
-(https://marketplace.visualstudio.com/items?itemName=csharpier.CSharpier)[install the extension]
+[install the extension](https://marketplace.visualstudio.com/items?itemName=csharpier.CSharpier)
 
 tools -> options -> csharpier -> csharpier - solution set true
 
